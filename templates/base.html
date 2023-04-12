@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body onload="removeFlash()">
+    <header>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          {% if 'username' in session %}
+          <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
+          <li><a href="{{ url_for('submit_flag') }}">Submit Flag</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      <h1>The Keep</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="card">
+                {% block content %}{% endblock %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  <div id="flashes">
+                    {% for category,message in messages %}
+                      <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endwith %}
+            </div>
+        </div>
+    </main>
+    <script>
+        var removeFlash = function(){
+            setTimeout(function(){
+                document.getElementById('flashes').remove()
+            }, 4000);
+        };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Scoreboard{% endblock %}
+
+{% block content %}
+  <h1>Scoreboard</h1>
+  <div class="scoreboard">
+    <div class="scoreboard_row">
+        <div class="cell">Username</div>
+        <div class="cell">Flags Submitted</div>
+    </div>
+    <div>
+      {% for user, score in user_scores %}
+        <div class="scoreboard_row">
+          <div class="cell">{{ user.username }}</div>
+          <div class="cell">{{ score }}</div>
+        </div>
+      {% endfor %}
+      </div>
+  </div>
+{% endblock %}
